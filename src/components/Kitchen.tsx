@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import './Kitchen.css';
 
 interface Recipe {
   name: string;
@@ -13,6 +14,24 @@ const Kitchen: React.FC = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+  const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('savedRecipes');
+    if (saved) {
+      setSavedRecipes(JSON.parse(saved));
+    }
+  }, []);
+
+  const saveRecipe = (recipe: Recipe) => {
+    const newSavedRecipes = [...savedRecipes, recipe];
+    setSavedRecipes(newSavedRecipes);
+    localStorage.setItem('savedRecipes', JSON.stringify(newSavedRecipes));
+  };
+
+  const isRecipeSaved = (recipe: Recipe) => {
+    return savedRecipes.some(saved => saved.name === recipe.name);
+  };
 
   const generateRecipes = async () => {
     if (!ingredients.trim()) {
@@ -124,6 +143,13 @@ const Kitchen: React.FC = () => {
           recipes.map((recipe, index) => (
             <div key={index} className="recipe-card">
               <h2>{recipe.name}</h2>
+              <button
+                className="save-button"
+                onClick={() => saveRecipe(recipe)}
+                disabled={isRecipeSaved(recipe)}
+              >
+                {isRecipeSaved(recipe) ? 'Recipe Saved' : 'Save Recipe'}
+              </button>
               <h3>Ingredients:</h3>
               <ul>
                 {recipe.ingredients.map((ingredient, i) => (
