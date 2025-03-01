@@ -60,7 +60,8 @@ function App() {
         <footer style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '20px', textAlign: 'center' }}>
           <p style={{ color: '#6C757D' }}>Created by | All Rights Reserved</p>
         </footer>
-        </Router>
+       </div>
+    </Router>
   );
 }
 
