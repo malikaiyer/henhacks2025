@@ -6,44 +6,64 @@ import Kitchen from './components/Kitchen';
 function App() {
   return (
     <Router>
-      <div className="App">
-        <nav className="navbar">
-          <div className="logo">Community Plate</div>
-          <div className="nav-links">
-            <Link to="/">Home</Link>
-            <Link to="/kitchen">What's in My Kitchen</Link>
-            <Link to="/share">Food Share Hub</Link>
-            <Link to="/rescue">Rescue Meals</Link>
-            <Link to="/forum">Community Forum</Link>
-          </div>
-        </nav>
+      <div style={{ background: 'linear-gradient(to right,rgb(187, 163, 239),rgb(208, 207, 212))', minHeight: '100vh' }}>
+        
+        {/* Navbar */}
+        <Navbar bg="light" fixed="top" expand="lg" className="p-3">
+          <Navbar.Brand>RescueBites</Navbar.Brand>
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+              {/* Using Link for navigation */}
+              <Nav.Link as={Link} to="/">Home</Nav.Link>
+              <Nav.Link as={Link} to="/mealplan">Meal Plan</Nav.Link>
+              <Nav.Link as={Link} to="/community">Community Resources</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
 
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/kitchen" element={<KitchenPage />} />
-            <Route path="/share" element={<ShareHub />} />
-            <Route path="/rescue" element={<RescueMeals />} />
-            <Route path="/forum" element={<CommunityForum />} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+        {/* Animated Sections */}
+        <Routes>
+          <Route path="/community" element={<CommunityPage />} />
+          
+          {/* Default route (home) */}
+          <Route path="/" element={
+            <div style={{ textAlign: 'center', paddingTop: '100px' }}>
+
+              {/* Main Section */}
+        <div style={{ textAlign: 'center', paddingTop: '100px', paddingBottom: '50px' }}>
+          <h1 style={{ color: '#E91E63', fontFamily: "'Nunito', sans-serif" }}>Welcome to RescueBites</h1>
+          <p style={{ fontSize: '1.25rem', color: '#3A3A3A' }}>Tackling food insecurity one bite at a time</p>
+        </div>
+
+        {/* Animated Sections */}
+       {sections.map((section, index) => (
+        <MotionCard
+          key={section.id}
+          id={section.id}
+          style={{ padding: '40px', backgroundColor: index % 2 === 0 ? 'white' : '#F8F9FA', textAlign: 'center' }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <Container>
+            <h2 style={{ color: '#E91E63' }}>{section.title}</h2>
+            <p style={{ fontSize: '1.25rem', color: '#3A3A3A' }}>{section.content}</p>
+          </Container>
+        </MotionCard>
+      ))}
+            </div>
+          } />
+        </Routes>
+
+        {/* Footer */}
+        <footer style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '20px', textAlign: 'center' }}>
+          <p style={{ color: '#6C757D' }}>Created by | All Rights Reserved</p>
+        </footer>
+        </Router>
   );
 }
 
-// Placeholder components (to be moved to separate files later)
-const Home = () => (
-  <div className="home">
-    <h1>Welcome to Community Plate</h1>
-    <p>Fighting food insecurity together, one plate at a time.</p>
-  </div>
-);
-
-// Update the KitchenPage component to:
-const KitchenPage = () => <Kitchen />;
-const ShareHub = () => <div>Food Share Hub Page</div>;
-const RescueMeals = () => <div>Rescue Meals Page</div>;
-const CommunityForum = () => <div>Community Forum Page</div>;
-
 export default App;
+
+
