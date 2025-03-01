@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import { motion } from "framer-motion";
 import { Container, Navbar, Nav, Button, Row, Col, Card, } from "react-bootstrap";
