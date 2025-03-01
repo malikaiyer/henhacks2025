@@ -1,7 +1,18 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import './App.css';
-import Kitchen from './components/Kitchen';
+import React from "react";
+import { motion } from "framer-motion";
+import { Container, Navbar, Nav, Button, Row, Col, Card, } from "react-bootstrap";
+import CommunityPage from "./pages/CommunityPage";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Route, Link, Routes } from "react-router-dom";
+
+const MotionCard = motion.div;
+
+const sections = [
+  { id: "about", title: "What is Food Insecurity?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet..." },
+  { id: "services", title: "Statistics on Food Insecurity", content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore..." },
+  { id: "mealplan", title: "MealPlanner", content: "Reach out to us at contact@example.com for more information." },
+  { id: "community", title: "Community Resources", content: "hugougouboubougoug" }
+];
 
 function App() {
   return (
