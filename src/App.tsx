@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Container, Navbar, Nav, Button, Row, Col, Card, } from "react-bootstrap";
 import CommunityPage from "./pages/CommunityPage";
 import { BrowserRouter as Router } from "react-router-dom";
-import { Route, Link, Routes } from "react-router-dom";
+import { Route, Link, Routes, Navigate } from "react-router-dom";
 
 const MotionCard = motion.div;
 
@@ -66,6 +66,9 @@ function App() {
       ))}
             </div>
           } />
+
+          {/* Add a default redirect if the route does not exist */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
 
         {/* Footer */}
