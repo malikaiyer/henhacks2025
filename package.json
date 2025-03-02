@@ -2,6 +2,7 @@
   "name": "henhacks2025",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://malikaiyer.github.io/henhacks2025",
   "dependencies": {
     "@google/generative-ai": "^0.22.0",
     "@maptiler/sdk": "^1.2.1",
