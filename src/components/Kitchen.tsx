@@ -90,16 +90,17 @@ const Kitchen: React.FC = () => {
   };
 
   return (
-    <div className="kitchen-container">
-      <h1>What's in My Kitchen?</h1>
-      <div className="input-section">
+    <div className="kitchen-container" style={{ minHeight: '100vh', paddingTop: '90px', maxWidth: '100%', padding: '2rem' }}>
+      <h1 style={{ color: '#388E3C', fontFamily: "'Sigmar', serif", textShadow: "4px 4px 4px #aaa", fontSize: '3rem', textAlign: 'center', marginBottom: '2rem' }}>What's in My Kitchen?</h1>
+      <div className="input-section" style={{ maxWidth: '800px', margin: '0 auto' }}>
         <textarea
           value={ingredients}
           onChange={(e) => setIngredients(e.target.value)}
           placeholder="Enter your ingredients (comma-separated)"
           rows={4}
+          style={{ width: '100%', marginBottom: '1rem' }}
         />
-        <div className="recipe-count">
+        <div className="recipe-count" style={{ marginBottom: '1rem' }}>
           <label>Number of Recipes:</label>
           <input
             type="number"
@@ -107,39 +108,86 @@ const Kitchen: React.FC = () => {
             max={10}
             value={numRecipes}
             onChange={(e) => setNumRecipes(parseInt(e.target.value))}
+            style={{ marginLeft: '1rem', width: '80px' }}
           />
         </div>
 
-        {error && <div className="error-message">{error}</div>}
+        {error && <div className="error-message" style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
 
-        <button onClick={generateRecipes} disabled={loading}>
+        <button 
+          onClick={generateRecipes} 
+          disabled={loading}
+          style={{
+            width: '100%',
+            padding: '0.75rem',
+            backgroundColor: '#388E3C',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: loading ? 'not-allowed' : 'pointer'
+          }}
+        >
           {loading ? "Generating Recipes..." : "Generate Recipes"}
         </button>
       </div>
 
-      {/* ✅ Display generated recipes with "Save" button */}
-      <div className="recipes-section">
+      <div className="recipes-section" style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+        gap: '2rem',
+        marginTop: '2rem'
+      }}>
         {recipes.map((recipe, index) => (
-          <div key={index} className="recipe-card">
-            <h2>{recipe.name}</h2>
-            <button className="save-button" onClick={() => saveRecipe(recipe)}>
+          <div key={index} className="recipe-card" style={{
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            padding: '1.5rem',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            height: '100%'
+          }}>
+            <h2 style={{ color: '#388E3C', marginBottom: '1rem' }}>{recipe.name}</h2>
+            <button 
+              className="save-button" 
+              onClick={() => saveRecipe(recipe)}
+              style={{
+                backgroundColor: '#388E3C',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                padding: '0.5rem 1rem',
+                marginBottom: '1rem',
+                width: '100%'
+              }}
+            >
               Save Recipe
             </button>
             <h3>Ingredients:</h3>
-            <ul>{recipe.ingredients.map((ing, i) => <li key={i}>{ing}</li>)}</ul>
+            <ul style={{ paddingLeft: '1.5rem' }}>{recipe.ingredients.map((ing, i) => <li key={i}>{ing}</li>)}</ul>
             <h3>Instructions:</h3>
-            <ol>{recipe.instructions.map((step, i) => <li key={i}>{step}</li>)}</ol>
+            <ol style={{ paddingLeft: '1.5rem' }}>{recipe.instructions.map((step, i) => <li key={i}>{step}</li>)}</ol>
           </div>
         ))}
       </div>
 
-      {/* ✅ Display Saved Recipes */}
-      <h2>Saved Recipes</h2>
-      <ul>
-        {savedRecipes.map((recipe, i) => (
-          <li key={i}>{recipe.name}</li>
-        ))}
-      </ul>
+      <div style={{ marginTop: '2rem' }}>
+        <h2 style={{ color: '#388E3C' }}>Saved Recipes</h2>
+        <ul style={{ 
+          listStyle: 'none', 
+          padding: 0,
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '1rem'
+        }}>
+          {savedRecipes.map((recipe, i) => (
+            <li key={i} style={{
+              backgroundColor: 'white',
+              padding: '1rem',
+              borderRadius: '4px',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+            }}>{recipe.name}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

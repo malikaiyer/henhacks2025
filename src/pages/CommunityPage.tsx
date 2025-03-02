@@ -82,13 +82,13 @@ const CommunityPage: React.FC = () => {
   };
 
   return (
-  <Container fluid className="p-0" style={{ minHeight: '100vh', paddingTop: '76px' }}>
-    <Container>
+  <Container fluid className="p-0" style={{ minHeight: '100vh', paddingTop: '120px', maxWidth: '100%' }}>
+    <Container className="py-4" style={{ maxWidth: '1400px' }}>
       <h1 style={{ color: '#388E3C', fontFamily: "'Sigmar', serif", textShadow: "4px 4px 4px #aaa", fontSize: '3rem', textAlign: 'center', marginBottom: '2rem' }}>
         Community Resources
       </h1>
       <Row className="justify-content-center mb-4">
-        <Col md={6}>
+        <Col md={8} lg={6}>
           <Form className="d-flex gap-2" onSubmit={(e) => { e.preventDefault(); searchFoodBanks(); }}>
             <Form.Control
               type="text"
@@ -120,7 +120,7 @@ const CommunityPage: React.FC = () => {
 
       <Row className="justify-content-center">
         {foodBanks.map((foodBank, idx) => (
-          <Col key={idx} md={4} className="mb-4">
+          <Col key={idx} xs={12} sm={6} md={4} lg={4} className="mb-4">
             <Card className="community-card h-100">
               <Card.Body>
                 <Card.Title>{foodBank.name}</Card.Title>
@@ -128,13 +128,14 @@ const CommunityPage: React.FC = () => {
                   <p><strong>Distance:</strong> {foodBank.distance.toFixed(1)} miles</p>
                   <p><strong>Address:</strong> {foodBank.address}</p>
                   <p>{foodBank.description}</p>
-                  <div className="d-flex gap-2">
+                  <div className="d-flex gap-2 flex-wrap">
                     {foodBank.website && (
                       <Button
                         variant="outline-success"
                         href={foodBank.website}
                         target="_blank"
                         rel="noopener noreferrer"
+                        className="mb-2"
                       >
                         Visit Website
                       </Button>
@@ -142,6 +143,7 @@ const CommunityPage: React.FC = () => {
                     <Button
                       variant={isFoodBankSaved(foodBank) ? "danger" : "success"}
                       onClick={() => toggleSaveFoodBank(foodBank)}
+                      className="mb-2"
                     >
                       {isFoodBankSaved(foodBank) ? "Unsave" : "Save"}
                     </Button>
@@ -160,6 +162,17 @@ const CommunityPage: React.FC = () => {
       }
       .community-card:hover {
         background-color: #f0f0f0;
+      }
+      @media (max-width: 576px) {
+        h1 {
+          font-size: 2rem !important;
+        }
+        .d-flex.gap-2 {
+          flex-direction: column;
+        }
+        .d-flex.gap-2 > * {
+          width: 100%;
+        }
       }
     `}</style>
   </Container>
