@@ -18,14 +18,14 @@ const stats = [
     number: 2.3,
     suffix: "B",
     description: "people experience severe food insecurity.",
-    bgImage: "https://cdn.pixabay.com/photo/2016/11/21/15/45/man-1846050_960_720.jpg",
+    bgImage: "https://cdn.pixabay.com/photo/2017/08/10/07/20/grocery-store-2619380_1280.jpg",
   },
   {
     id: "stat3",
     number: 582,
     suffix: "M",
     description: "people are projected to be chronically undernourished by 2030",
-    bgImage: "https://source.unsplash.com/1600x900/?children,malnutrition",
+    bgImage: "https://cdn.pixabay.com/photo/2021/08/14/18/01/people-6545894_1280.jpg",
   },
   {
     id: "stat4",
@@ -154,8 +154,7 @@ const ProductOverview = () => (
   }
   
   const ProductDetail: React.FC<ProductDetailProps> = ({ title, description, image }) => (
-    <motion.div className="product-detail d-flex align-items-center justify-content-around p-5" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1 }}
-    style={{ height: "100vh" }}>
+    <motion.div className="product-detail d-flex align-items-center justify-content-around p-5" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 1 }}>
       <div>
       <motion.h2
         initial={{ opacity: 0, y: 50 }}
@@ -172,14 +171,7 @@ const ProductOverview = () => (
         {description}
       </motion.p>
       </div>
-      <motion.img 
-      src={image} 
-      alt={title} 
-      style={{ width: "40%", borderRadius: "10px" }}
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1, delay: 0.9 }}
-    />
+      <img src={image} alt={title} style={{ width: "40%", borderRadius: "10px" }} />
     </motion.div>
   );
   
@@ -210,8 +202,18 @@ const ProductOverview = () => (
             <StatSection key={stat.id} {...stat} />
           ))}
           <ProductOverview />
-          <ProductDetail title="Product 1" description="Connecting restaurants with food banks to redistribute excess food." image="https://source.unsplash.com/600x400/?food,donation" />
-          <ProductDetail title="Product 2" description="Using AI-powered logistics to optimize food distribution and reduce waste." image="https://source.unsplash.com/600x400/?logistics,truck" />
+          <ProductDetail title="CommunityBites" description="
+          CommunityBites is a transformative initiative designed to bridge the gap between surplus food from various sources 
+          (like restaurants, grocery stores, and food vendors) and underserved communities facing food insecurity. By leveraging 
+          cutting-edge technology and a robust logistics network, CommunityBites connects donors - whether large food establishments, 
+          individual households, or farms—with local non-profit organizations, food banks, and direct beneficiaries.
+            The goal of CommunityBites is to ensure that surplus food does not go to waste but is instead redirected to those who need it the most. 
+        It operates as a seamless platform where both donors and recipients can easily coordinate the exchange of food." image="https://source.unsplash.com/600x400/?food,donation" />
+          
+          <ProductDetail title="MealBites" description="MealBites is an innovative AI-driven meal recommendation platform designed to tackle food insecurity by helping individuals make the most of what they already have in their pantry. By providing personalized meal suggestions based on available ingredients, MealBites empowers people to reduce food waste, maximize their pantry resources, and minimize the need for external food support.
+            Food insecurity is not only about lack of access to food, but also the inability to make nutritious meals from available resources. Many households, particularly in underserved communities, face challenges in meal planning and utilizing their pantry staples efficiently. This leads to food waste, unbalanced meals, and the need for external food assistance.
+            MealBites addresses this issue by using cutting-edge AI algorithms to recommend easy-to-make meals based on the ingredients users already have. Whether it's a can of beans, a few fresh veggies, or some leftover rice, MealBites analyzes these items and suggests recipes that are both nutritious and easy to prepare, ensuring that no food goes unused." 
+          image="https://source.unsplash.com/600x400/?logistics,truck" />
         </div>
     );
   };
