@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -118,12 +119,12 @@ const ProductOverview = () => (
         <motion.div className="card p-4" whileHover={{ scale: 1.1 }}>
           <h3>CommunityBites</h3>
           <p>A revolutionary way to connect surplus food with communities.</p>
-          <img src="https://cdn.pixabay.com/photo/2020/04/27/15/00/friends-5100219_1280.jpg" alt="CommunityBites" width='200px' height='200px' text-align='center' />
+          <img src="/images/community-resources.png" alt="CommunityBites" width='200px' height='200px' text-align='center' />
         </motion.div>
         <motion.div className="card p-4" whileHover={{ scale: 1.1 }}>
           <h3>MealBites</h3>
           <p>Advanced logistics to ensure no food goes to waste.</p>
-          <img src="https://cdn.pixabay.com/photo/2023/03/13/11/13/scallions-7849575_1280.jpg" alt="MealBites" width='300px' height='200px' text-align='center' />
+          <img src="/images/whats-in-my-kitchen.png" alt="MealBites" width='300px' height='200px' text-align='center' />
         </motion.div>
       </div>
   </motion.div>
@@ -158,70 +159,70 @@ const ProductOverview = () => (
   );
   
   const StatsPage = () => {
-    const scrollRef = useRef<LocomotiveScroll | null>(null);
-    const currentSectionRef = useRef(0);
-    const autoScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const sections = [...stats, { id: 'overview' }, { id: 'communityBites' }, { id: 'mealBites' }];
+    // const scrollRef = useRef<LocomotiveScroll | null>(null);
+    // const currentSectionRef = useRef(0);
+    // const autoScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    // const sections = [...stats, { id: 'overview' }, { id: 'communityBites' }, { id: 'mealBites' }];
   
-    useEffect(() => {
-      const scroll = new LocomotiveScroll({
-        el: document.querySelector("[data-scroll-container]") as HTMLElement,
-        smooth: true,
-      });
-      scrollRef.current = scroll;
+    // useEffect(() => {
+    //   const scroll = new LocomotiveScroll({
+    //     el: document.querySelector("[data-scroll-container]") as HTMLElement,
+    //     smooth: true,
+    //   });
+    //   scrollRef.current = scroll;
   
-      const resetAutoScrollTimeout = () => {
-        if (autoScrollTimeoutRef.current) {
-          clearTimeout(autoScrollTimeoutRef.current);
-        }
-        autoScrollTimeoutRef.current = setTimeout(() => {
-          autoScroll();
-        }, 6000); // Resume auto-scroll after 6 seconds
-      };
+    //   const resetAutoScrollTimeout = () => {
+    //     if (autoScrollTimeoutRef.current) {
+    //       clearTimeout(autoScrollTimeoutRef.current);
+    //     }
+    //     autoScrollTimeoutRef.current = setTimeout(() => {
+    //       autoScroll();
+    //     }, 6000); // Resume auto-scroll after 6 seconds
+    //   };
   
-      const handleUserScroll = () => {
-        if (autoScrollTimeoutRef.current) {
-          clearTimeout(autoScrollTimeoutRef.current);
-        }
-        resetAutoScrollTimeout();
-      };
+    //   const handleUserScroll = () => {
+    //     if (autoScrollTimeoutRef.current) {
+    //       clearTimeout(autoScrollTimeoutRef.current);
+    //     }
+    //     resetAutoScrollTimeout();
+    //   };
   
-      const autoScroll = () => {
-        if (currentSectionRef.current < sections.length) {
-          const sectionElements = document.querySelectorAll('.stat-section, .product-overview, .product-detail');
-          if (sectionElements[currentSectionRef.current]) {
-            scroll.scrollTo(sectionElements[currentSectionRef.current] as HTMLElement, {
-              duration: 1000,
-              disableLerp: false,
-            });
-            currentSectionRef.current++;
-          }
-        } else {
-          scroll.scrollTo(0, { duration: 1000, disableLerp: false });
-          currentSectionRef.current = 0;
-        }
-        resetAutoScrollTimeout();
-      };
+    //   const autoScroll = () => {
+    //     if (currentSectionRef.current < sections.length) {
+    //       const sectionElements = document.querySelectorAll('.stat-section, .product-overview, .product-detail');
+    //       if (sectionElements[currentSectionRef.current]) {
+    //         scroll.scrollTo(sectionElements[currentSectionRef.current] as HTMLElement, {
+    //           duration: 1000,
+    //           disableLerp: false,
+    //         });
+    //         currentSectionRef.current++;
+    //       }
+    //     } else {
+    //       scroll.scrollTo(0, { duration: 1000, disableLerp: false });
+    //       currentSectionRef.current = 0;
+    //     }
+    //     resetAutoScrollTimeout();
+    //   };
   
-      // Start initial auto-scroll
-      const initialScrollTimeout = setTimeout(() => {
-        autoScroll();
-      }, 3000);
+    //   // Start initial auto-scroll
+    //   const initialScrollTimeout = setTimeout(() => {
+    //     autoScroll();
+    //   }, 3000);
   
-      // Add scroll event listener
-      window.addEventListener('wheel', handleUserScroll);
-      window.addEventListener('touchmove', handleUserScroll);
+    //   // Add scroll event listener
+    //   window.addEventListener('wheel', handleUserScroll);
+    //   window.addEventListener('touchmove', handleUserScroll);
   
-      return () => {
-        if (autoScrollTimeoutRef.current) {
-          clearTimeout(autoScrollTimeoutRef.current);
-        }
-        clearTimeout(initialScrollTimeout);
-        window.removeEventListener('wheel', handleUserScroll);
-        window.removeEventListener('touchmove', handleUserScroll);
-        scroll.destroy();
-      };
-    }, [sections.length]);
+    //   return () => {
+    //     if (autoScrollTimeoutRef.current) {
+    //       clearTimeout(autoScrollTimeoutRef.current);
+    //     }
+    //     clearTimeout(initialScrollTimeout);
+    //     window.removeEventListener('wheel', handleUserScroll);
+    //     window.removeEventListener('touchmove', handleUserScroll);
+    //     scroll.destroy();
+    //   };
+    // }, [sections.length]);
   
     return (
       <div data-scroll-container style={{ paddingTop: '20px' }}>
