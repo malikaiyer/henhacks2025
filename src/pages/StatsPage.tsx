@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -158,70 +159,70 @@ const ProductOverview = () => (
   );
   
   const StatsPage = () => {
-    const scrollRef = useRef<LocomotiveScroll | null>(null);
-    const currentSectionRef = useRef(0);
-    const autoScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const sections = [...stats, { id: 'overview' }, { id: 'communityBites' }, { id: 'mealBites' }];
+    // const scrollRef = useRef<LocomotiveScroll | null>(null);
+    // const currentSectionRef = useRef(0);
+    // const autoScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    // const sections = [...stats, { id: 'overview' }, { id: 'communityBites' }, { id: 'mealBites' }];
   
-    useEffect(() => {
-      const scroll = new LocomotiveScroll({
-        el: document.querySelector("[data-scroll-container]") as HTMLElement,
-        smooth: true,
-      });
-      scrollRef.current = scroll;
+    // useEffect(() => {
+    //   const scroll = new LocomotiveScroll({
+    //     el: document.querySelector("[data-scroll-container]") as HTMLElement,
+    //     smooth: true,
+    //   });
+    //   scrollRef.current = scroll;
   
-      const resetAutoScrollTimeout = () => {
-        if (autoScrollTimeoutRef.current) {
-          clearTimeout(autoScrollTimeoutRef.current);
-        }
-        autoScrollTimeoutRef.current = setTimeout(() => {
-          autoScroll();
-        }, 6000); // Resume auto-scroll after 6 seconds
-      };
+    //   const resetAutoScrollTimeout = () => {
+    //     if (autoScrollTimeoutRef.current) {
+    //       clearTimeout(autoScrollTimeoutRef.current);
+    //     }
+    //     autoScrollTimeoutRef.current = setTimeout(() => {
+    //       autoScroll();
+    //     }, 6000); // Resume auto-scroll after 6 seconds
+    //   };
   
-      const handleUserScroll = () => {
-        if (autoScrollTimeoutRef.current) {
-          clearTimeout(autoScrollTimeoutRef.current);
-        }
-        resetAutoScrollTimeout();
-      };
+    //   const handleUserScroll = () => {
+    //     if (autoScrollTimeoutRef.current) {
+    //       clearTimeout(autoScrollTimeoutRef.current);
+    //     }
+    //     resetAutoScrollTimeout();
+    //   };
   
-      const autoScroll = () => {
-        if (currentSectionRef.current < sections.length) {
-          const sectionElements = document.querySelectorAll('.stat-section, .product-overview, .product-detail');
-          if (sectionElements[currentSectionRef.current]) {
-            scroll.scrollTo(sectionElements[currentSectionRef.current] as HTMLElement, {
-              duration: 1000,
-              disableLerp: false,
-            });
-            currentSectionRef.current++;
-          }
-        } else {
-          scroll.scrollTo(0, { duration: 1000, disableLerp: false });
-          currentSectionRef.current = 0;
-        }
-        resetAutoScrollTimeout();
-      };
+    //   const autoScroll = () => {
+    //     if (currentSectionRef.current < sections.length) {
+    //       const sectionElements = document.querySelectorAll('.stat-section, .product-overview, .product-detail');
+    //       if (sectionElements[currentSectionRef.current]) {
+    //         scroll.scrollTo(sectionElements[currentSectionRef.current] as HTMLElement, {
+    //           duration: 1000,
+    //           disableLerp: false,
+    //         });
+    //         currentSectionRef.current++;
+    //       }
+    //     } else {
+    //       scroll.scrollTo(0, { duration: 1000, disableLerp: false });
+    //       currentSectionRef.current = 0;
+    //     }
+    //     resetAutoScrollTimeout();
+    //   };
   
-      // Start initial auto-scroll
-      const initialScrollTimeout = setTimeout(() => {
-        autoScroll();
-      }, 3000);
+    //   // Start initial auto-scroll
+    //   const initialScrollTimeout = setTimeout(() => {
+    //     autoScroll();
+    //   }, 3000);
   
-      // Add scroll event listener
-      window.addEventListener('wheel', handleUserScroll);
-      window.addEventListener('touchmove', handleUserScroll);
+    //   // Add scroll event listener
+    //   window.addEventListener('wheel', handleUserScroll);
+    //   window.addEventListener('touchmove', handleUserScroll);
   
-      return () => {
-        if (autoScrollTimeoutRef.current) {
-          clearTimeout(autoScrollTimeoutRef.current);
-        }
-        clearTimeout(initialScrollTimeout);
-        window.removeEventListener('wheel', handleUserScroll);
-        window.removeEventListener('touchmove', handleUserScroll);
-        scroll.destroy();
-      };
-    }, [sections.length]);
+    //   return () => {
+    //     if (autoScrollTimeoutRef.current) {
+    //       clearTimeout(autoScrollTimeoutRef.current);
+    //     }
+    //     clearTimeout(initialScrollTimeout);
+    //     window.removeEventListener('wheel', handleUserScroll);
+    //     window.removeEventListener('touchmove', handleUserScroll);
+    //     scroll.destroy();
+    //   };
+    // }, [sections.length]);
   
     return (
       <div data-scroll-container style={{ paddingTop: '20px' }}>
@@ -232,12 +233,12 @@ const ProductOverview = () => (
         <ProductDetail 
           title="CommunityBites" 
           description="CommunityBites is a transformative initiative designed to bridge the gap between surplus food from various sources (like restaurants, grocery stores, and food vendors) and underserved communities facing food insecurity. By leveraging cutting-edge technology and a robust logistics network, CommunityBites connects donors - whether large food establishments, individual households, or farms—with local non-profit organizations, food banks, and direct beneficiaries. The goal of CommunityBites is to ensure that surplus food does not go to waste but is instead redirected to those who need it the most. It operates as a seamless platform where both donors and recipients can easily coordinate the exchange of food." 
-          image="https://source.unsplash.com/600x400/?food,donation" 
+          image="/images/community-resources.png" 
         />
         <ProductDetail 
           title="MealBites" 
           description="MealBites is an innovative AI-driven meal recommendation platform designed to tackle food insecurity by helping individuals make the most of what they already have in their pantry. By providing personalized meal suggestions based on available ingredients, MealBites empowers people to reduce food waste, maximize their pantry resources, and minimize the need for external food support. Food insecurity is not only about lack of access to food, but also the inability to make nutritious meals from available resources. Many households, particularly in underserved communities, face challenges in meal planning and utilizing their pantry staples efficiently. This leads to food waste, unbalanced meals, and the need for external food assistance. MealBites addresses this issue by using cutting-edge AI algorithms to recommend easy-to-make meals based on the ingredients users already have. Whether it's a can of beans, a few fresh veggies, or some leftover rice, MealBites analyzes these items and suggests recipes that are both nutritious and easy to prepare, ensuring that no food goes unused." 
-          image="https://source.unsplash.com/600x400/?logistics,truck" 
+          image="/images/whats-in-my-kitchen.png" 
         />
       </div>
     );
