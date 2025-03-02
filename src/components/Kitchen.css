@@ -1,7 +1,11 @@
 .kitchen-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 76px 2rem 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .input-section {
@@ -9,6 +13,8 @@
   flex-direction: column;
   gap: 1rem;
   margin-bottom: 2rem;
+  width: 100%;
+  max-width: 800px;
 }
 
 textarea {
@@ -68,6 +74,8 @@ button:disabled {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+  width: 100%;
+  padding: 1rem;
 }
 
 .recipe-card {
