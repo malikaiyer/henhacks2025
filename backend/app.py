@@ -1,70 +1,66 @@
 from flask import Flask, request, jsonify
-import google.generativeai as genai
-from flask_cors import CORS
-import os
-import json
+import sqlite3
+from flask_cors import CORS  # ✅ Fixes CORS issues
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # ✅ Allow frontend requests from different origins
 
-# Initialize Gemini API
-genai.configure(api_key='AIzaSyAn1y2XOrjC0VphIOFrVPMGD1dE4Pj65bg')
+# ✅ Home route to verify Flask is running
+@app.route("/")
+def home():
+    return "Flask API is running!"
 
-@app.route('/')
-def index():
-    return jsonify({'message': 'Welcome to the Food Resource API'})
+# ✅ Initialize the database
+def init_db():
+    conn = sqlite3.connect("recipes.db")
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS recipes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            ingredients TEXT,
+            instructions TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
 
-@app.route('/api/foodbanks', methods=['GET'])
-def get_foodbanks():
-    try:
-        zip_code = request.args.get('zipCode')
-        
-        if not zip_code or not zip_code.isdigit() or len(zip_code) != 5:
-            return jsonify({'error': 'Please provide a valid 5-digit zip code'}), 400
-        
-        # Construct the prompt for Gemini
-        prompt = f"""Find food banks and food pantries near zip code {zip_code} within 50 miles. For each location, provide:
-        - Name
-        - Address
-        - Approximate distance in miles
-        - Brief description of services
-        - Website URL if available
-        Format the response as a valid JSON array with each food bank as an object containing name, address, distance, description, and website fields. Do not include any markdown formatting or backticks."""
+init_db()
 
-        # Generate response using Gemini
-        model = genai.GenerativeModel('gemini-2.0-flash')
-        result = model.generate_content(prompt)
-        
-        if not result or not result.response:
-            raise Exception('No response from API')
-        
-        # Get the response text and ensure it's properly formatted
-        text = result.response.text
-        print("Raw API response:", text)  # Debug logging
-        
-        # Clean the response text and parse JSON
-        cleaned_text = text.replace('```json', '').replace('```', '').strip()
-        food_banks = json.loads(cleaned_text)
-        
-        if not isinstance(food_banks, list):
-            raise Exception('Response is not an array')
-        
-        if not food_banks:
-            raise Exception('No food banks found in this area')
-        
-        # Validate each food bank object
-        for bank in food_banks:
-            if not all(key in bank for key in ['name', 'address', 'distance', 'description']):
-                raise Exception('Invalid food bank data format')
-        
-        return jsonify(food_banks)
-    
-    except Exception as e:
-        return jsonify({'error': str(e) or 'Failed to fetch food banks. Please try again.'}), 500
+# ✅ API: Save a new recipe
+@app.route("/api/save_recipe", methods=["POST"])
+def save_recipe():
+    data = request.json
 
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({'error': 'Route not found'}), 404
+    if not data or "name" not in data or "ingredients" not in data or "instructions" not in data:
+        return jsonify({"error": "Invalid recipe data"}), 400
 
-if __name__ == '__main__':
-    app.run(port=4000, debug=True)
+    conn = sqlite3.connect("recipes.db")
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO recipes (name, ingredients, instructions) VALUES (?, ?, ?)",
+                   (data["name"], ', '.join(data["ingredients"]), '. '.join(data["instructions"])))
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Recipe saved successfully!"}), 201
+
+# ✅ API: Get saved recipes
+@app.route("/api/saved_recipes", methods=["GET"])
+def get_saved_recipes():
+    conn = sqlite3.connect("recipes.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, name, ingredients, instructions FROM recipes")
+    recipes = [
+        {
+            "id": row[0], 
+            "name": row[1], 
+            "ingredients": row[2].split(', '), 
+            "instructions": row[3].split('. ')
+        } 
+        for row in cursor.fetchall()
+    ]
+    conn.close()
+    return jsonify(recipes)
+
+if __name__ == "__main__":
+    app.run(debug=True)
