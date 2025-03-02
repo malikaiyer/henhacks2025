@@ -24,9 +24,15 @@ const Kitchen: React.FC = () => {
   }, []);
 
   const saveRecipe = (recipe: Recipe) => {
-    const newSavedRecipes = [...savedRecipes, recipe];
-    setSavedRecipes(newSavedRecipes);
-    localStorage.setItem('savedRecipes', JSON.stringify(newSavedRecipes));
+    if (isRecipeSaved(recipe)) {
+      const newSavedRecipes = savedRecipes.filter(saved => saved.name !== recipe.name);
+      setSavedRecipes(newSavedRecipes);
+      localStorage.setItem('savedRecipes', JSON.stringify(newSavedRecipes));
+    } else {
+      const newSavedRecipes = [...savedRecipes, recipe];
+      setSavedRecipes(newSavedRecipes);
+      localStorage.setItem('savedRecipes', JSON.stringify(newSavedRecipes));
+    }
   };
 
   const isRecipeSaved = (recipe: Recipe) => {
@@ -146,9 +152,9 @@ const Kitchen: React.FC = () => {
               <button
                 className="save-button"
                 onClick={() => saveRecipe(recipe)}
-                disabled={isRecipeSaved(recipe)}
+                disabled={false}
               >
-                {isRecipeSaved(recipe) ? 'Recipe Saved' : 'Save Recipe'}
+                {isRecipeSaved(recipe) ? 'Unsave Recipe' : 'Save Recipe'}
               </button>
               <h3>Ingredients:</h3>
               <ul>
