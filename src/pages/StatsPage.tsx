@@ -9,7 +9,7 @@ const stats = [
   {
     id: "stat1",
     number: 1,
-    suffix: "in 11",
+    suffix: " in 11",
     description: "people suffer from hunger worldwide.",
     bgImage: "https://cdn.pixabay.com/photo/2019/12/31/13/45/crowd-4731930_1280.jpg",
   },

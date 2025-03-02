@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Form, Button, Spinner } from "react-bootstrap";
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 interface FoodBank {
   name: string;
@@ -14,6 +15,36 @@ const CommunityPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [foodBanks, setFoodBanks] = useState<FoodBank[]>([]);
   const [error, setError] = useState('');
+  const [savedFoodBanks, setSavedFoodBanks] = useState<FoodBank[]>([]);
+
+  useEffect(() => {
+    // Load saved food banks from localStorage on component mount
+    const saved = localStorage.getItem('savedFoodBanks');
+    if (saved) {
+      setSavedFoodBanks(JSON.parse(saved));
+    }
+  }, []);
+
+  const toggleSaveFoodBank = (foodBank: FoodBank) => {
+    setSavedFoodBanks(prev => {
+      const isCurrentlySaved = prev.some(saved => saved.name === foodBank.name && saved.address === foodBank.address);
+      let newSavedFoodBanks;
+      
+      if (isCurrentlySaved) {
+        newSavedFoodBanks = prev.filter(saved => !(saved.name === foodBank.name && saved.address === foodBank.address));
+      } else {
+        newSavedFoodBanks = [...prev, foodBank];
+      }
+
+      // Save to localStorage
+      localStorage.setItem('savedFoodBanks', JSON.stringify(newSavedFoodBanks));
+      return newSavedFoodBanks;
+    });
+  };
+
+  const isFoodBankSaved = (foodBank: FoodBank) => {
+    return savedFoodBanks.some(saved => saved.name === foodBank.name && saved.address === foodBank.address);
+  };
 
   const searchFoodBanks = async () => {
     if (!zipCode.match(/^\d{5}$/)) {
@@ -25,12 +56,23 @@ const CommunityPage: React.FC = () => {
     setError('');
 
     try {
-      const response = await fetch(`http://localhost:4000/api/foodbanks?zipCode=${zipCode}`);
-      const data = await response.json();
-      if (data.error) {
-        throw new Error(data.error);
-      }
-      setFoodBanks(data);
+      const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
+      if (!apiKey) throw new Error('API key not found');
+
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+
+      const prompt = `Generate a list of 3 food banks near ZIP code ${zipCode}.
+        Return a JSON array with objects having 'name', 'address', 'description', 'website' (optional), and 'distance' (in miles).
+        Make the data realistic and relevant to food assistance.`;
+
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+      const cleanedText = text.replace(/^```json\s*|```$/g, '').trim();
+      const parsedFoodBanks = JSON.parse(cleanedText);
+
+      setFoodBanks(parsedFoodBanks);
     } catch (err) {
       setError('Failed to fetch food banks. Please try again.');
       console.error('Error fetching food banks:', err);
@@ -86,16 +128,24 @@ const CommunityPage: React.FC = () => {
                   <p><strong>Distance:</strong> {foodBank.distance.toFixed(1)} miles</p>
                   <p><strong>Address:</strong> {foodBank.address}</p>
                   <p>{foodBank.description}</p>
-                  {foodBank.website && (
+                  <div className="d-flex gap-2">
+                    {foodBank.website && (
+                      <Button
+                        variant="outline-success"
+                        href={foodBank.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Visit Website
+                      </Button>
+                    )}
                     <Button
-                      variant="outline-success"
-                      href={foodBank.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      variant={isFoodBankSaved(foodBank) ? "danger" : "success"}
+                      onClick={() => toggleSaveFoodBank(foodBank)}
                     >
-                      Visit Website
+                      {isFoodBankSaved(foodBank) ? "Unsave" : "Save"}
                     </Button>
-                  )}
+                  </div>
                 </Card.Text>
               </Card.Body>
             </Card>

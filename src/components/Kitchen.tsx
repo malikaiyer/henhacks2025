@@ -65,19 +65,9 @@ const Kitchen: React.FC = () => {
     setError('');
 
     try {
-<<<<<<< HEAD
-      const apiKey = 'AIzaSyAn1y2XOrjC0VphIOFrVPMGD1dE4Pj65bg';
-      console.log('API Key loaded:', !!apiKey);
-      // testing if api key is loaded
-      if (!apiKey) {
-        throw new Error('API key is not configured');
-      }
-      
-=======
       const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
       if (!apiKey) throw new Error('API key not found');
 
->>>>>>> 754db581fd5c72e134974487d58e32510770e2b9
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
