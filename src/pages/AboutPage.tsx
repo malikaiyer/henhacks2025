@@ -11,7 +11,7 @@ const AboutPage: React.FC = () => {
 
   const teamMembers = [
     {
-        name: 'Malika',
+        name: 'Malika Iyer',
         role: 'Front-End Developer',
         description: 'Creates user-friendly interfaces that are both visually appealing and accessible. She uses her design skills to help tackle food insecurity.',
         linkedin: 'https://www.linkedin.com/in/malikaiyer/',
