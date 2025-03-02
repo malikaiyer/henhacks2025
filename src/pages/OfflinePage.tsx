@@ -8,37 +8,35 @@ interface Recipe {
   instructions: string[];
 }
 
-// Sample recipe database for offline mode
-const SAMPLE_RECIPES: Recipe[] = [
-  {
-    name: "Simple Pasta",
-    ingredients: ["pasta", "olive oil", "garlic", "salt"],
-    instructions: ["Boil pasta according to package instructions", "Heat olive oil in a pan", "Add minced garlic and sauté", "Combine pasta with garlic oil and season with salt"]
-  },
-  {
-    name: "Basic Salad",
-    ingredients: ["lettuce", "tomatoes", "cucumber", "olive oil", "salt", "pepper"],
-    instructions: ["Wash and chop lettuce", "Slice tomatoes and cucumber", "Combine vegetables in a bowl", "Dress with olive oil, salt, and pepper"]
-  },
-  {
-    name: "Rice Bowl",
-    ingredients: ["rice", "vegetables", "soy sauce", "oil"],
-    instructions: ["Cook rice according to package instructions", "Stir-fry vegetables in oil", "Combine rice and vegetables", "Season with soy sauce"]
-  }
-];
-
+// State to hold dynamically loaded recipes
 const OfflinePage: React.FC = () => {
   const [ingredients, setIngredients] = useState<string>('');
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState<string>('');
+  const [offlineRecipes, setOfflineRecipes] = useState<Recipe[]>([]);
 
   const API_BASE_URL = "http://127.0.0.1:5000";
 
   useEffect(() => {
+    loadOfflineRecipes();
     fetchSavedRecipes();
   }, []);
 
+  // Load recipes from Smalltalk-generated JSON file
+  const loadOfflineRecipes = async () => {
+    try {
+      const response = await fetch('/recipe.json');
+      if (!response.ok) throw new Error("Failed to load offline recipes");
+      const data: Recipe[] = await response.json();
+      setOfflineRecipes(data);
+    } catch (err: any) {
+      console.error("Error loading offline recipes:", err);
+      setError("Unable to load offline recipes.");
+    }
+  };
+
+  // Fetch saved recipes from local backend
   const fetchSavedRecipes = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/api/saved_recipes`);
@@ -68,6 +66,7 @@ const OfflinePage: React.FC = () => {
     }
   };
 
+  // Search function using dynamically loaded recipes
   const findRecipes = () => {
     if (!ingredients.trim()) {
       setError('Please enter some ingredients first');
@@ -77,8 +76,8 @@ const OfflinePage: React.FC = () => {
     setError('');
     const userIngredients = ingredients.toLowerCase().split(',').map(i => i.trim());
 
-    // Filter recipes that can be made with available ingredients
-    const matchingRecipes = SAMPLE_RECIPES.filter(recipe => {
+    // Filter offline recipes that match the available ingredients
+    const matchingRecipes = offlineRecipes.filter(recipe => {
       const requiredIngredients = recipe.ingredients.map(i => i.toLowerCase());
       return requiredIngredients.every(ingredient => 
         userIngredients.some(userIng => userIng.includes(ingredient) || ingredient.includes(userIng))
