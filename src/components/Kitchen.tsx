@@ -71,8 +71,16 @@ const Kitchen: React.FC = () => {
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
-      const prompt = `Generate ${numRecipes} recipes using these ingredients: ${ingredients}.
-        Return a JSON array with objects having 'name', 'ingredients' (list), and 'instructions' (list).`;
+      const prompt = `Generate exactly ${numRecipes} recipes using ONLY these ingredients: ${ingredients}.
+      IMPORTANT:
+      1. Use ONLY the ingredients listed above - do not add or suggest any additional ingredients
+      2. Your response must be a valid JSON array with no markdown formatting or backticks
+      3. Each recipe in the array must have these exact fields:
+         - "name": string
+         - "ingredients": array of strings (using only ingredients from the provided list)
+         - "instructions": array of strings
+      Example format: [{"name":"Recipe 1","ingredients":["ing1"],"instructions":["step1"]}]
+      Return ONLY the JSON array with no additional text.`;
 
       const result = await model.generateContent(prompt);
       const response = await result.response;
