@@ -7,6 +7,7 @@ import CommunityPage from "./pages/CommunityPage";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Link, Routes, Navigate } from "react-router-dom";
 
+
 const MotionCard = motion.div;
 
 const sections = [
@@ -44,7 +45,7 @@ function App() {
 
               {/* Main Section */}
         <div style={{ textAlign: 'center', paddingTop: '100px', paddingBottom: '50px' }}>
-          <h1 style={{ color: '#388E3C', fontFamily: "'Nunito', sans-serif" }}>Welcome to RescueBites</h1>
+          <h1 style={{ color: '#388E3C', fontFamily: "'Sigmar', serif", fontSize: '5rem' }}>Welcome to RescueBites</h1>
           <p style={{ fontSize: '1.25rem', color: '#3A3A3A' }}>Tackling food insecurity one bite at a time</p>
         </div>
 
@@ -60,7 +61,7 @@ function App() {
           viewport={{ once: true }}
         >
           <Container>
-            <h2 style={{ color: '#388E3C' }}>{section.title}</h2>
+            <h2 style={{ color: '#388E3C', fontFamily: "'Sigmar', serif" }}>{section.title}</h2>
             <p style={{ fontSize: '1.25rem', color: '#3A3A3A' }}>{section.content}</p>
           </Container>
         </MotionCard>

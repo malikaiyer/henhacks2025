@@ -1,8 +1,34 @@
-/* App.css */
+/* app.css */
 
-/* Global Styles */
+/* Apply the font globally */
 body {
+    font-family: "Sigmar", serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #f4f4f4; /* Optional: to add a background color */
     margin: 0;
+    padding: 0;    
+  }
+  
+  /* Additional styling for specific elements */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Sigmar", serif;
+    font-weight: 700; /* Bold for headings */
+  }
+  
+  p {
+    font-family: "Sigmar", serif;
+    font-weight: 400; /* Regular for paragraphs */
+  }
+  
+  /* Customize links */
+  a {
     font-family: 'Nunito', sans-serif;
+    color: #388E3C; /* You can change this to your desired link color */
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
   }
   
