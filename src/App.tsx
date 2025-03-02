@@ -7,6 +7,7 @@ import CommunityPage from "./pages/CommunityPage";
 import StatsPage from "./pages/StatsPage";
 import Kitchen from "./components/Kitchen";
 import AboutPage from "./pages/AboutPage";
+import OfflinePage from "./pages/OfflinePage";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Link, Routes, Navigate } from "react-router-dom";
 
@@ -32,8 +33,10 @@ function App() {
               <Nav className="ms-auto">
                 <Nav.Link as={Link} to="/" style={{ color: '#388E3C' }} className="nav-link-hover">Home</Nav.Link>
                 <Nav.Link as={Link} to="/mealplan" style={{ color: '#388E3C' }} className="nav-link-hover">Meal Plan</Nav.Link>
+                <Nav.Link as={Link} to="/offline" style={{ color: '#388E3C' }} className="nav-link-hover">Offline</Nav.Link>
                 <Nav.Link as={Link} to="/community" style={{ color: '#388E3C' }} className="nav-link-hover">Community Resources</Nav.Link>
                 <Nav.Link as={Link} to="/about" style={{ color: '#388E3C' }} className="nav-link-hover">About</Nav.Link>
+                
               </Nav>
             </Navbar.Collapse>
           </Container>
@@ -44,6 +47,7 @@ function App() {
           <Route path="/community" element={<CommunityPage />} />
           <Route path="/" element={<StatsPage />} />
           <Route path="/mealplan" element={<Kitchen />} />
+          <Route path="/Offline" element={<OfflinePage />} />
           <Route path="/about" element={<AboutPage />} />
           
           {/* Add a default redirect if the route does not exist */}
