@@ -32,9 +32,9 @@ function App() {
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="ms-auto">
                 <Nav.Link as={Link} to="/" style={{ color: '#388E3C' }} className="nav-link-hover">Home</Nav.Link>
-                <Nav.Link as={Link} to="/mealplan" style={{ color: '#388E3C' }} className="nav-link-hover">Meal Plan</Nav.Link>
+                <Nav.Link as={Link} to="/community" style={{ color: '#388E3C' }} className="nav-link-hover">CommunityBites</Nav.Link>
+                <Nav.Link as={Link} to="/mealplan" style={{ color: '#388E3C' }} className="nav-link-hover">MealBites</Nav.Link>
                 <Nav.Link as={Link} to="/offline" style={{ color: '#388E3C' }} className="nav-link-hover">Offline</Nav.Link>
-                <Nav.Link as={Link} to="/community" style={{ color: '#388E3C' }} className="nav-link-hover">Community Resources</Nav.Link>
                 <Nav.Link as={Link} to="/about" style={{ color: '#388E3C' }} className="nav-link-hover">About</Nav.Link>
                 
               </Nav>
