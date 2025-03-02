@@ -1,0 +1,89 @@
+[
+    {
+        "name": "Plain Popcorn",
+        "ingredients": [
+            "popcorn"
+        ],
+        "instructions": [
+            "Add popcorn kernels to a pot with a lid.",
+            "Heat over medium-high heat until popping begins.",
+            "Shake the pot occasionally to prevent burning.",
+            "Continue cooking until popping slows down significantly.",
+            "Remove from heat and enjoy."
+        ]
+    },
+    {
+        "name": "Salted Butter Potatoes",
+        "ingredients": [
+            "potatoes",
+            "butter",
+            "salt"
+        ],
+        "instructions": [
+            "Boil potatoes until tender.",
+            "Melt butter in a pan.",
+            "Add boiled potatoes to the pan with melted butter.",
+            "Sprinkle generously with salt.",
+            "Toss potatoes in butter and salt until coated.",
+            "Serve hot."
+        ]
+    },
+    {
+        "name": "Peanut Jelly Bites",
+        "ingredients": [
+            "peanuts",
+            "jelly"
+        ],
+        "instructions": [
+            "Spread a thin layer of jelly on a flat surface.",
+            "Sprinkle crushed peanuts over the jelly.",
+            "Cut the jelly into small squares or use a cookie cutter to create shapes.",
+            "Serve immediately or refrigerate for later."
+        ]
+    },
+    {
+        "name": "Grilled Cheese Sandwich",
+        "ingredients": [
+            "bread",
+            "cheese",
+            "butter"
+        ],
+        "instructions": [
+            "Butter one side of each bread slice.",
+            "Place cheese between the unbuttered sides of the bread.",
+            "Heat a pan over medium heat and place the sandwich in the pan.",
+            "Cook until golden brown on one side, then flip and cook the other side.",
+            "Remove from pan and serve hot."
+        ]
+    },
+    {
+        "name": "Egg Toast",
+        "ingredients": [
+            "egg",
+            "bread",
+            "butter",
+            "salt",
+            "pepper"
+        ],
+        "instructions": [
+            "Toast the bread slices until golden brown.",
+            "Fry an egg in butter to your desired doneness.",
+            "Place the fried egg on the toasted bread.",
+            "Season with salt and pepper to taste.",
+            "Serve warm."
+        ]
+    },
+    {
+        "name": "Banana Peanut Butter Bites",
+        "ingredients": [
+            "banana",
+            "peanut butter"
+        ],
+        "instructions": [
+            "Slice the banana into small rounds.",
+            "Spread peanut butter on one banana slice and place another slice on top.",
+            "Repeat until all banana slices are paired.",
+            "Serve immediately or refrigerate for later."
+        ]
+    }
+]
