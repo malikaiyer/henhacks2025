@@ -233,12 +233,12 @@ const ProductOverview = () => (
         <ProductDetail 
           title="CommunityBites" 
           description="CommunityBites is a transformative initiative designed to bridge the gap between surplus food from various sources (like restaurants, grocery stores, and food vendors) and underserved communities facing food insecurity. By leveraging cutting-edge technology and a robust logistics network, CommunityBites connects donors - whether large food establishments, individual households, or farms—with local non-profit organizations, food banks, and direct beneficiaries. The goal of CommunityBites is to ensure that surplus food does not go to waste but is instead redirected to those who need it the most. It operates as a seamless platform where both donors and recipients can easily coordinate the exchange of food." 
-          image="/images/community-resources.png" 
+          image="${process.env.PUBLIC_URL}/images/community-resources.png" 
         />
         <ProductDetail 
           title="MealBites" 
           description="MealBites is an innovative AI-driven meal recommendation platform designed to tackle food insecurity by helping individuals make the most of what they already have in their pantry. By providing personalized meal suggestions based on available ingredients, MealBites empowers people to reduce food waste, maximize their pantry resources, and minimize the need for external food support. Food insecurity is not only about lack of access to food, but also the inability to make nutritious meals from available resources. Many households, particularly in underserved communities, face challenges in meal planning and utilizing their pantry staples efficiently. This leads to food waste, unbalanced meals, and the need for external food assistance. MealBites addresses this issue by using cutting-edge AI algorithms to recommend easy-to-make meals based on the ingredients users already have. Whether it's a can of beans, a few fresh veggies, or some leftover rice, MealBites analyzes these items and suggests recipes that are both nutritious and easy to prepare, ensuring that no food goes unused." 
-          image="/images/whats-in-my-kitchen.png" 
+          image="${process.env.PUBLIC_URL}/images/whats-in-my-kitchen.png" 
         />
       </div>
     );
