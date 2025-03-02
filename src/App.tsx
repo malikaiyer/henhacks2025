@@ -23,7 +23,7 @@ function App() {
         flexDirection: 'column'
       }}>
         {/* Navbar */}
-        <Navbar bg="light" fixed="top" expand="lg" className="p-3 shadow-sm">
+        <Navbar bg="light" expand="lg" className="p-3 shadow-sm">
           <Container fluid>
             <Navbar.Brand style={{ color: '#388E3C', fontSize: '1.5rem', fontWeight: 'bold' }}>RescueBites</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -44,17 +44,12 @@ function App() {
           <Route path="/" element={<StatsPage />} />
           <Route path="/mealplan" element={<Kitchen />} />
           
-
           {/* Add a default redirect if the route does not exist */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
 
-        {/* Main Content */}
-        <Container fluid className="flex-grow-1 px-0" style={{ marginTop: '76px' }}>
-        </Container>
-
         {/* Footer */}
-        <footer className="mt-auto py-4" style={{ 
+        <footer className="mt-auto py-3" style={{ 
           backgroundColor: 'rgba(255, 255, 255, 0.8)', 
           borderTop: '1px solid rgba(0,0,0,0.1)'
         }}>

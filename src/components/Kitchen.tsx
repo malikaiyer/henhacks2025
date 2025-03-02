@@ -90,7 +90,7 @@ const Kitchen: React.FC = () => {
   };
 
   return (
-    <div className="kitchen-container" style={{ minHeight: '100vh', paddingTop: '90px', maxWidth: '100%', padding: '2rem' }}>
+    <div className="kitchen-container" style={{ minHeight: '100vh', paddingTop: '20px', maxWidth: '100%', padding: '2rem' }}>
       <h1 style={{ color: '#388E3C', fontFamily: "'Sigmar', serif", textShadow: "4px 4px 4px #aaa", fontSize: '3rem', textAlign: 'center', marginBottom: '2rem' }}>What's in My Kitchen?</h1>
       <div className="input-section" style={{ maxWidth: '800px', margin: '0 auto' }}>
         <textarea
