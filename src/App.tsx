@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { motion } from "framer-motion";
 import { Container, Navbar, Nav, Button, Row, Col, Card, } from "react-bootstrap";
 import CommunityPage from "./pages/CommunityPage";
+import Kitchen from "./components/Kitchen";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Link, Routes, Navigate } from "react-router-dom";
 
@@ -38,6 +39,7 @@ function App() {
         {/* Animated Sections */}
         <Routes>
           <Route path="/community" element={<CommunityPage />} />
+          <Route path="/mealplan" element={<Kitchen />} />
           
           {/* Default route (home) */}
           <Route path="/" element={
