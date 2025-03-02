@@ -49,11 +49,11 @@ const Kitchen: React.FC = () => {
     setError('');
     
     try {
-      const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
-      console.log('API Key loaded:', !!apiKey); // Temporary debug log
+      const apiKey = 'AIzaSyAn1y2XOrjC0VphIOFrVPMGD1dE4Pj65bg';
+      console.log('API Key loaded:', !!apiKey);
       
-      if (!apiKey || apiKey === 'undefined') {
-        throw new Error('API key not found in environment variables. Please ensure REACT_APP_GEMINI_API_KEY is set in your .env file');
+      if (!apiKey) {
+        throw new Error('API key is not configured');
       }
       
       const genAI = new GoogleGenerativeAI(apiKey);
