@@ -221,7 +221,7 @@ const ProductOverview = () => (
         window.removeEventListener('touchmove', handleUserScroll);
         scroll.destroy();
       };
-    }, []);
+    }, [sections.length]);
   
     return (
       <div data-scroll-container style={{ paddingTop: '20px' }}>
