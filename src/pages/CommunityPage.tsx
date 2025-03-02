@@ -16,17 +16,10 @@ const CommunityPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [foodBanks, setFoodBanks] = useState<FoodBank[]>([]);
   const [error, setError] = useState('');
-  const [savedFoodBanks, setSavedFoodBanks] = useState<FoodBank[]>([]);
   const [selectedFoodBank, setSelectedFoodBank] = useState<FoodBank | null>(null);
   const [reviewText, setReviewText] = useState('');
 
-  useEffect(() => {
-    // Load saved food banks from localStorage on component mount
-    const saved = localStorage.getItem('savedFoodBanks');
-    if (saved) {
-      setSavedFoodBanks(JSON.parse(saved));
-    }
-  }, []);
+
 
   const handleSaveReview = () => {
     if (!selectedFoodBank || !reviewText.trim()) return;
@@ -64,26 +57,7 @@ const CommunityPage: React.FC = () => {
     localStorage.setItem('savedFoodBanks', JSON.stringify(updatedSavedBanks));
   };
 
-  const toggleSaveFoodBank = (foodBank: FoodBank) => {
-    setSavedFoodBanks(prev => {
-      const isCurrentlySaved = prev.some(saved => saved.name === foodBank.name && saved.address === foodBank.address);
-      let newSavedFoodBanks;
-      
-      if (isCurrentlySaved) {
-        newSavedFoodBanks = prev.filter(saved => !(saved.name === foodBank.name && saved.address === foodBank.address));
-      } else {
-        newSavedFoodBanks = [...prev, foodBank];
-      }
 
-      // Save to localStorage
-      localStorage.setItem('savedFoodBanks', JSON.stringify(newSavedFoodBanks));
-      return newSavedFoodBanks;
-    });
-  };
-
-  const isFoodBankSaved = (foodBank: FoodBank) => {
-    return savedFoodBanks.some(saved => saved.name === foodBank.name && saved.address === foodBank.address);
-  };
 
   const searchFoodBanks = async () => {
     if (!zipCode.match(/^\d{5}$/)) {
@@ -179,13 +153,7 @@ const CommunityPage: React.FC = () => {
                           Visit Website
                         </Button>
                       )}
-                      <Button
-                        variant={isFoodBankSaved(foodBank) ? "danger" : "success"}
-                        onClick={() => toggleSaveFoodBank(foodBank)}
-                        className="mb-2"
-                      >
-                        {isFoodBankSaved(foodBank) ? "Unsave" : "Save"}
-                      </Button>
+
                       <OverlayTrigger
                         trigger={["hover", "focus"]}
                         placement="top"
