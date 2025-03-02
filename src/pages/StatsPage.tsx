@@ -192,7 +192,7 @@ const ProductOverview = () => (
         clearInterval(intervalId);
         scroll.destroy();
       };
-    }, []);
+    }, [sections.length]);
   
     return (
       <div data-scroll-container style={{ paddingTop: '90px' }}>
