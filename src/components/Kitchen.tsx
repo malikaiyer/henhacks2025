@@ -51,7 +51,7 @@ const Kitchen: React.FC = () => {
     try {
       const apiKey = 'AIzaSyAn1y2XOrjC0VphIOFrVPMGD1dE4Pj65bg';
       console.log('API Key loaded:', !!apiKey);
-      
+      // testing if api key is loaded
       if (!apiKey) {
         throw new Error('API key is not configured');
       }
