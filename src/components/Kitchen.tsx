@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import './Kitchen.css';
 
 interface Recipe {
-  id?: number; // Optional because it will be assigned by the database
+  id?: number; // Assigned by database
   name: string;
   ingredients: string[];
   instructions: string[];
@@ -13,18 +13,20 @@ const Kitchen: React.FC = () => {
   const [ingredients, setIngredients] = useState<string>('');
   const [numRecipes, setNumRecipes] = useState<number>(3);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
-  const [savedRecipes, setSavedRecipes] = useState<Recipe[]>([]);
+
+  const API_BASE_URL = "http://127.0.0.1:5000"; // Flask backend URL
 
   useEffect(() => {
     fetchSavedRecipes();
   }, []);
 
-  // Fetch saved recipes from Flask
+  // ✅ Fetch saved recipes from Flask
   const fetchSavedRecipes = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/saved_recipes");
+      const response = await fetch(`${API_BASE_URL}/api/saved_recipes`);
       if (!response.ok) throw new Error("Failed to fetch saved recipes");
       const data: Recipe[] = await response.json();
       setSavedRecipes(data);
@@ -33,10 +35,10 @@ const Kitchen: React.FC = () => {
     }
   };
 
-  // Function to save a recipe to Flask
+  // ✅ Function to save a recipe to Flask
   const saveRecipe = async (recipe: Recipe) => {
     try {
-      const response = await fetch("http://localhost:5000/api/save_recipe", {
+      const response = await fetch(`${API_BASE_URL}/api/save_recipe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(recipe),
@@ -44,8 +46,7 @@ const Kitchen: React.FC = () => {
 
       if (!response.ok) throw new Error("Failed to save recipe");
 
-      // Update saved recipes list
-      fetchSavedRecipes();
+      fetchSavedRecipes(); // Refresh saved recipes list
       alert(`Recipe "${recipe.name}" saved successfully!`);
     } catch (err: any) {
       console.error("Error saving recipe:", err);
@@ -53,7 +54,7 @@ const Kitchen: React.FC = () => {
     }
   };
 
-  // Generate recipes using Google Gemini API
+  // ✅ Generate recipes using Google Gemini API
   const generateRecipes = async () => {
     if (!ingredients.trim()) {
       setError('Please enter some ingredients first');
@@ -116,6 +117,7 @@ const Kitchen: React.FC = () => {
         </button>
       </div>
 
+      {/* ✅ Display generated recipes with "Save" button */}
       <div className="recipes-section">
         {recipes.map((recipe, index) => (
           <div key={index} className="recipe-card">
@@ -131,6 +133,7 @@ const Kitchen: React.FC = () => {
         ))}
       </div>
 
+      {/* ✅ Display Saved Recipes */}
       <h2>Saved Recipes</h2>
       <ul>
         {savedRecipes.map((recipe, i) => (
