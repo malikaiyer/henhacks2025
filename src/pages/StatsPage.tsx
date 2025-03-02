@@ -160,6 +160,7 @@ const ProductOverview = () => (
   const StatsPage = () => {
     const scrollRef = useRef<LocomotiveScroll | null>(null);
     const currentSectionRef = useRef(0);
+    const autoScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const sections = [...stats, { id: 'overview' }, { id: 'communityBites' }, { id: 'mealBites' }];
   
     useEffect(() => {
@@ -168,6 +169,22 @@ const ProductOverview = () => (
         smooth: true,
       });
       scrollRef.current = scroll;
+  
+      const resetAutoScrollTimeout = () => {
+        if (autoScrollTimeoutRef.current) {
+          clearTimeout(autoScrollTimeoutRef.current);
+        }
+        autoScrollTimeoutRef.current = setTimeout(() => {
+          autoScroll();
+        }, 6000); // Resume auto-scroll after 6 seconds
+      };
+  
+      const handleUserScroll = () => {
+        if (autoScrollTimeoutRef.current) {
+          clearTimeout(autoScrollTimeoutRef.current);
+        }
+        resetAutoScrollTimeout();
+      };
   
       const autoScroll = () => {
         if (currentSectionRef.current < sections.length) {
@@ -180,22 +197,34 @@ const ProductOverview = () => (
             currentSectionRef.current++;
           }
         } else {
-          // Reset to top when reaching the end
           scroll.scrollTo(0, { duration: 1000, disableLerp: false });
           currentSectionRef.current = 0;
         }
+        resetAutoScrollTimeout();
       };
   
-      const intervalId = setInterval(autoScroll, 3000); // 3 seconds interval
+      // Start initial auto-scroll
+      const initialScrollTimeout = setTimeout(() => {
+        autoScroll();
+      }, 3000);
+  
+      // Add scroll event listener
+      window.addEventListener('wheel', handleUserScroll);
+      window.addEventListener('touchmove', handleUserScroll);
   
       return () => {
-        clearInterval(intervalId);
+        if (autoScrollTimeoutRef.current) {
+          clearTimeout(autoScrollTimeoutRef.current);
+        }
+        clearTimeout(initialScrollTimeout);
+        window.removeEventListener('wheel', handleUserScroll);
+        window.removeEventListener('touchmove', handleUserScroll);
         scroll.destroy();
       };
     }, [sections.length]);
   
     return (
-      <div data-scroll-container style={{ paddingTop: '90px' }}>
+      <div data-scroll-container style={{ paddingTop: '20px' }}>
         {stats.map((stat) => (
           <StatSection key={stat.id} {...stat} />
         ))}
