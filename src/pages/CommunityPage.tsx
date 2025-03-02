@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { Container, Row, Col, Card, Form, Button, Spinner, Modal, OverlayTrigger, Popover } from "react-bootstrap";
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
