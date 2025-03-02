@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Container, Navbar, Nav, Button, Row, Col, Card, } from "react-bootstrap";
 import CommunityPage from "./pages/CommunityPage";
 import StatsPage from "./pages/StatsPage";
+import Kitchen from "./components/Kitchen";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Link, Routes, Navigate } from "react-router-dom";
 
@@ -35,7 +36,8 @@ function App() {
         <Routes>
           <Route path="/community" element={<CommunityPage />} />
           <Route path="/" element={<StatsPage />} />
-  
+          <Route path="/mealplan" element={<Kitchen />} />
+          
 
           {/* Add a default redirect if the route does not exist */}
           <Route path="*" element={<Navigate to="/" />} />
