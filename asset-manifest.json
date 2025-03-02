@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/henhacks2025/static/css/main.c9545bdc.css",
-    "main.js": "/henhacks2025/static/js/main.2f143895.js",
+    "main.js": "/henhacks2025/static/js/main.fd6d3e2d.js",
     "static/js/453.b0790a2c.chunk.js": "/henhacks2025/static/js/453.b0790a2c.chunk.js",
     "index.html": "/henhacks2025/index.html",
     "main.c9545bdc.css.map": "/henhacks2025/static/css/main.c9545bdc.css.map",
-    "main.2f143895.js.map": "/henhacks2025/static/js/main.2f143895.js.map",
+    "main.fd6d3e2d.js.map": "/henhacks2025/static/js/main.fd6d3e2d.js.map",
     "453.b0790a2c.chunk.js.map": "/henhacks2025/static/js/453.b0790a2c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c9545bdc.css",
-    "static/js/main.2f143895.js"
+    "static/js/main.fd6d3e2d.js"
   ]
 }
