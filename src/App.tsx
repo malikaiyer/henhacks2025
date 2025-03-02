@@ -4,84 +4,82 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { motion } from "framer-motion";
 import { Container, Navbar, Nav, Button, Row, Col, Card, } from "react-bootstrap";
 import CommunityPage from "./pages/CommunityPage";
+import StatsPage from "./pages/StatsPage";
 import Kitchen from "./components/Kitchen";
+import AboutPage from "./pages/AboutPage";
+import OfflinePage from "./pages/OfflinePage";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Link, Routes, Navigate } from "react-router-dom";
 
 
-const MotionCard = motion.div;
 
-const sections = [
-  { id: "about", title: "What is Food Insecurity?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet..." },
-  { id: "services", title: "Statistics on Food Insecurity", content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore..." },
-  { id: "mealplan", title: "MealPlanner", content: "Reach out to us at contact@example.com for more information." },
-  { id: "community", title: "Community Resources", content: "hugougouboubougoug" }
-];
+const MotionCard = motion.div;
 
 function App() {
   return (
     <Router>
-      <div style={{ background: 'linear-gradient(to right, #a8d08d, #d9f7be)', minHeight: '100vh' }}>
-        
+      <div style={{ 
+        background: 'linear-gradient(to right, #a8d08d, #d9f7be)', 
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
         {/* Navbar */}
-        <Navbar bg="light" fixed="top" expand="lg" className="p-3">
-          <Navbar.Brand style={{ color: '#388E3C' }}>RescueBites</Navbar.Brand>
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto">
-              {/* Using Link for navigation */}
-              <Nav.Link as={Link} to="/" style={{ color: '#388E3C' }}>Home</Nav.Link>
-              <Nav.Link as={Link} to="/mealplan" style={{ color: '#388E3C' }}>Meal Plan</Nav.Link>
-              <Nav.Link as={Link} to="/community" style={{ color: '#388E3C' }}>Community Resources</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
+        <Navbar bg="light" expand="lg" className="p-3 shadow-sm">
+          <Container fluid>
+            <Navbar.Brand style={{ color: '#388E3C', fontSize: '1.5rem', fontWeight: 'bold' }}>RescueBites</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="ms-auto">
+                <Nav.Link as={Link} to="/" style={{ color: '#388E3C' }} className="nav-link-hover">Home</Nav.Link>
+                <Nav.Link as={Link} to="/community" style={{ color: '#388E3C' }} className="nav-link-hover">CommunityBites</Nav.Link>
+                <Nav.Link as={Link} to="/mealplan" style={{ color: '#388E3C' }} className="nav-link-hover">MealBites</Nav.Link>
+                <Nav.Link as={Link} to="/offline" style={{ color: '#388E3C' }} className="nav-link-hover">Offline</Nav.Link>
+                <Nav.Link as={Link} to="/about" style={{ color: '#388E3C' }} className="nav-link-hover">About</Nav.Link>
+                
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
         </Navbar>
 
         {/* Animated Sections */}
         <Routes>
           <Route path="/community" element={<CommunityPage />} />
+          <Route path="/" element={<StatsPage />} />
           <Route path="/mealplan" element={<Kitchen />} />
+          <Route path="/Offline" element={<OfflinePage />} />
+          <Route path="/about" element={<AboutPage />} />
           
-          {/* Default route (home) */}
-          <Route path="/" element={
-            <div style={{ textAlign: 'center', paddingTop: '100px' }}>
-
-              {/* Main Section */}
-        <div style={{ textAlign: 'center', height: '100vh', paddingTop: '200px', paddingBottom: '100px', backgroundImage: 'url("https://cdn.pixabay.com/photo/2022/09/05/14/37/fruits-7434339_1280.jpg")',
-    backgroundSize: 'cover', backgroundPosition: 'center', }}>
-          <h1 style={{ color: '#388E3C', fontFamily: "'Sigmar', serif", textShadow: "4px 4px 4px #aaa", fontSize: '5rem'}}>
-            Welcome to RescueBites</h1>
-          <p style={{ fontSize: '1.25rem', color: '#3A3A3A' }}>Tackling food insecurity one bite at a time</p>
-        </div>
-
-        {/* Animated Sections */}
-       {sections.map((section, index) => (
-        <MotionCard
-          key={section.id}
-          id={section.id}
-          style={{ padding: '40px', backgroundColor: index % 2 === 0 ? '#e8f5e9' : '#c8e6c9', textAlign: 'center' }}
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <Container>
-            <h2 style={{ color: '#388E3C', fontFamily: "'Sigmar', serif" }}>{section.title}</h2>
-            <p style={{ fontSize: '1.25rem', color: '#3A3A3A' }}>{section.content}</p>
-          </Container>
-        </MotionCard>
-      ))}
-            </div>
-          } />
-
           {/* Add a default redirect if the route does not exist */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
 
         {/* Footer */}
-        <footer style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)', padding: '20px', textAlign: 'center' }}>
-          <p style={{ color: '#6C757D' }}>Created by | All Rights Reserved</p>
+        <footer className="mt-auto py-3" style={{ 
+          backgroundColor: 'rgba(255, 255, 255, 0.8)', 
+          borderTop: '1px solid rgba(0,0,0,0.1)'
+        }}>
+          <Container>
+            <Row className="justify-content-center">
+              <Col md={8} className="text-center">
+                <p className="mb-0" style={{ color: '#6C757D' }}>Created with ❤️ by RescueBites Team | All Rights Reserved © {new Date().getFullYear()}</p>
+              </Col>
+            </Row>
+          </Container>
         </footer>
-       </div>
+      </div>
+      <style>{
+        `.nav-link-hover:hover {
+          color: #2E7D32 !important;
+          transform: translateY(-2px);
+          transition: all 0.3s ease;
+        }
+        @media (max-width: 768px) {
+          .navbar-brand {
+            font-size: 1.2rem !important;
+          }
+        }`
+      }</style>
     </Router>
   );
 }

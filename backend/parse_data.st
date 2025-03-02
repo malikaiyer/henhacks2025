@@ -147,7 +147,11 @@ jsonString nextPutAll: '}'. cr.
 Transcript show: jsonString contents; cr.
 Transcript show: '-------------------------'; cr.
 
+<<<<<<< HEAD
 Save JSON to a file"
+=======
+"Save JSON to a file"
+>>>>>>> 92d96c528c3ba0a6eb801570b16010a1d60f0f85
 fileStream := 'recipe.json' asFileReference writeStream.
 fileStream nextPutAll: jsonString contents.
 fileStream close.
