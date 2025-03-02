@@ -45,7 +45,7 @@ function App() {
 
               {/* Main Section */}
         <div style={{ textAlign: 'center', paddingTop: '100px', paddingBottom: '50px' }}>
-          <h1 style={{ color: '#388E3C', fontFamily: "'Sigmar', serif", fontSize: '5rem' }}>Welcome to RescueBites</h1>
+          <h1 style={{ color: '#388E3C', fontFamily: "'Sigmar', serif", textShadow: "4px 4px 4px #aaa", fontSize: '5rem'}}>Welcome to RescueBites</h1>
           <p style={{ fontSize: '1.25rem', color: '#3A3A3A' }}>Tackling food insecurity one bite at a time</p>
         </div>
 
