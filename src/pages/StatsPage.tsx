@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LocomotiveScroll from "locomotive-scroll";
 import "locomotive-scroll/dist/locomotive-scroll.css";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const stats = [
   {
@@ -91,24 +91,6 @@ const StatSection: React.FC<StatSectionProps> = ({ number, suffix, description, 
   );
 };
 
-// const StatsPage = () => {
-//   return (
-//     <div>
-//       {stats.map((stat) => (
-//         <StatSection
-//           key={stat.id}
-//           number={stat.number}
-//           suffix={stat.suffix}
-//           description={stat.description}
-//           bgImage={stat.bgImage}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
-
-// export default StatsPage;
-
 const ProductOverview = () => (
   <motion.div
     className="product-overview"
@@ -176,45 +158,59 @@ const ProductOverview = () => (
   );
   
   const StatsPage = () => {
-    // return (
-    //   <div>
-    //     {stats.map((stat) => (
-    //       <StatSection key={stat.id} {...stat} />
-    //     ))}
-    //     <ProductOverview />
-    //     <ProductDetail title="Product 1" description="Connecting restaurants with food banks to redistribute excess food." image="https://source.unsplash.com/600x400/?food,donation" />
-    //     <ProductDetail title="Product 2" description="Using AI-powered logistics to optimize food distribution and reduce waste." image="https://source.unsplash.com/600x400/?logistics,truck" />
-    //   </div>
+    const scrollRef = useRef<LocomotiveScroll | null>(null);
+    const currentSectionRef = useRef(0);
+    const sections = [...stats, { id: 'overview' }, { id: 'communityBites' }, { id: 'mealBites' }];
+  
     useEffect(() => {
-        const scroll = new LocomotiveScroll({
-          el: document.querySelector("[data-scroll-container]") as HTMLElement,
-          smooth: true,
-        });
-    
-        return () => {
-          scroll.destroy();
-        };
-      }, []);
-    
-      return (
-        <div data-scroll-container>
-          {stats.map((stat) => (
-            <StatSection key={stat.id} {...stat} />
-          ))}
-          <ProductOverview />
-          <ProductDetail title="CommunityBites" description="
-          CommunityBites is a transformative initiative designed to bridge the gap between surplus food from various sources 
-          (like restaurants, grocery stores, and food vendors) and underserved communities facing food insecurity. By leveraging 
-          cutting-edge technology and a robust logistics network, CommunityBites connects donors - whether large food establishments, 
-          individual households, or farms—with local non-profit organizations, food banks, and direct beneficiaries.
-            The goal of CommunityBites is to ensure that surplus food does not go to waste but is instead redirected to those who need it the most. 
-        It operates as a seamless platform where both donors and recipients can easily coordinate the exchange of food." image="https://source.unsplash.com/600x400/?food,donation" />
-          
-          <ProductDetail title="MealBites" description="MealBites is an innovative AI-driven meal recommendation platform designed to tackle food insecurity by helping individuals make the most of what they already have in their pantry. By providing personalized meal suggestions based on available ingredients, MealBites empowers people to reduce food waste, maximize their pantry resources, and minimize the need for external food support.
-            Food insecurity is not only about lack of access to food, but also the inability to make nutritious meals from available resources. Many households, particularly in underserved communities, face challenges in meal planning and utilizing their pantry staples efficiently. This leads to food waste, unbalanced meals, and the need for external food assistance.
-            MealBites addresses this issue by using cutting-edge AI algorithms to recommend easy-to-make meals based on the ingredients users already have. Whether it's a can of beans, a few fresh veggies, or some leftover rice, MealBites analyzes these items and suggests recipes that are both nutritious and easy to prepare, ensuring that no food goes unused." 
-          image="https://source.unsplash.com/600x400/?logistics,truck" />
-        </div>
+      const scroll = new LocomotiveScroll({
+        el: document.querySelector("[data-scroll-container]") as HTMLElement,
+        smooth: true,
+      });
+      scrollRef.current = scroll;
+  
+      const autoScroll = () => {
+        if (currentSectionRef.current < sections.length) {
+          const sectionElements = document.querySelectorAll('.stat-section, .product-overview, .product-detail');
+          if (sectionElements[currentSectionRef.current]) {
+            scroll.scrollTo(sectionElements[currentSectionRef.current] as HTMLElement, {
+              duration: 1000,
+              disableLerp: false,
+            });
+            currentSectionRef.current++;
+          }
+        } else {
+          // Reset to top when reaching the end
+          scroll.scrollTo(0, { duration: 1000, disableLerp: false });
+          currentSectionRef.current = 0;
+        }
+      };
+  
+      const intervalId = setInterval(autoScroll, 3000); // 3 seconds interval
+  
+      return () => {
+        clearInterval(intervalId);
+        scroll.destroy();
+      };
+    }, []);
+  
+    return (
+      <div data-scroll-container style={{ paddingTop: '90px' }}>
+        {stats.map((stat) => (
+          <StatSection key={stat.id} {...stat} />
+        ))}
+        <ProductOverview />
+        <ProductDetail 
+          title="CommunityBites" 
+          description="CommunityBites is a transformative initiative designed to bridge the gap between surplus food from various sources (like restaurants, grocery stores, and food vendors) and underserved communities facing food insecurity. By leveraging cutting-edge technology and a robust logistics network, CommunityBites connects donors - whether large food establishments, individual households, or farms—with local non-profit organizations, food banks, and direct beneficiaries. The goal of CommunityBites is to ensure that surplus food does not go to waste but is instead redirected to those who need it the most. It operates as a seamless platform where both donors and recipients can easily coordinate the exchange of food." 
+          image="https://source.unsplash.com/600x400/?food,donation" 
+        />
+        <ProductDetail 
+          title="MealBites" 
+          description="MealBites is an innovative AI-driven meal recommendation platform designed to tackle food insecurity by helping individuals make the most of what they already have in their pantry. By providing personalized meal suggestions based on available ingredients, MealBites empowers people to reduce food waste, maximize their pantry resources, and minimize the need for external food support. Food insecurity is not only about lack of access to food, but also the inability to make nutritious meals from available resources. Many households, particularly in underserved communities, face challenges in meal planning and utilizing their pantry staples efficiently. This leads to food waste, unbalanced meals, and the need for external food assistance. MealBites addresses this issue by using cutting-edge AI algorithms to recommend easy-to-make meals based on the ingredients users already have. Whether it's a can of beans, a few fresh veggies, or some leftover rice, MealBites analyzes these items and suggests recipes that are both nutritious and easy to prepare, ensuring that no food goes unused." 
+          image="https://source.unsplash.com/600x400/?logistics,truck" 
+        />
+      </div>
     );
   };
   
