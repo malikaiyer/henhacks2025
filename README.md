@@ -1,3 +1,25 @@
+# HenHacks 2025 - Smalltalk Mini Category Submission
+
+# Project Overview
+This project is a **recipe recommendation system** that helps users find recipes based on available ingredients. It includes an **offline mode** that ensures users can still find recipes even when the AI service is unavailable.
+
+# Smalltalk Usage in the Project
+Our project leverages Smalltalk for data preprocessing and recipe generation, ensuring structured and accessible recipe data across different application states. Using Pharo Smalltalk, we converted raw recipe data into a well-structured JSON format, allowing for efficient storage and retrieval. Additionally, we generated prebuilt offline recipes to maintain functionality when AI-powered services are unavailable, providing users with a fallback solution for recipe recommendations. To enhance usability, we parsed and formatted the JSON data for seamless integration into the React frontend, enabling dynamic recipe searches and efficient filtering based on user-provided ingredients.
+
+# Location of Smalltalk Files
+- **`backend/parse_data.st`** → Smalltalk script that generates `recipe.json`
+- **`public/recipe.json`** → JSON output from Smalltalk, used in the offline mode
+- **`OfflinePage.tsx` (src/pages/)** → React component that loads `recipe.json` in offline mode
+
+# How to Run the Smalltalk Script
+1. Open **Pharo Smalltalk**
+2. Load and run `parse_data.st`
+3. The script generates `recipe.json` in the `public/` directory
+4. Run the React app to test offline mode with the generated JSON
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
